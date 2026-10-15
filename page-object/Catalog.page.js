@@ -12,27 +12,35 @@ export class CatalogPage{
         this.tabletPrice = page.locator('[id="product-price-5"]');
         this.coffeMachinePrice = page.locator('[id="product-price-6"]');
 
-        this.tabletNameValue = '';
-        this.coffeMachineNameValue = '';
-        this.tabletPriceValue = '';
-        this.coffeMachinePriceValue = '';
-
     }
     async selectProduct(){
         await this.coffeMachineProduct.click({delay: 2000});
         await this.tabletProduct.click({delay: 2000});
         await this.page.waitForLoadState('networkidle');
         await this.basketCount.waitFor();
-        await expect (this.basketCount).toContainText('2', {timeout:3000});
-        await this.saveProductInfo();
-        await this.basketCount.click();
+
+        const itemsInfo = await this.getProductInfo();
+
+        return itemsInfo;
 
     }
-    async saveProductInfo() {
-        this.tabletNameValue = await this.tabletName.innerText();
-        this.coffeMachineNameValue = await this.coffeMachineName.innerText();
-        this.tabletPriceValue = await this.tabletPrice.innerText();
-        this.coffeMachinePriceValue = await this.coffeMachinePrice.innerText();
+
+    async gotoBasket(){
+        await this.basketCount.click();
+    }
+
+    async getProductInfo() {
+        return{
+            firstProduct:{
+                name: await this.coffeMachineName.innerText(),
+                price: await this.coffeMachinePrice.innerText()
+            },
+
+            secondProduct:{
+                name: await this.tabletName.innerText(),
+                price: await this.tabletPrice.innerText()
+            }
+        }
 
     }
 }

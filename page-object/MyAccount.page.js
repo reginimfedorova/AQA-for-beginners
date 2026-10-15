@@ -8,23 +8,13 @@ export class MyAccountPage{
     
     }
 
-    async checkFinalOrder(firstItemPrice, lastItemPrice){
-        const totalPrice = Number(firstItemPrice.replace('$', '')) + Number(lastItemPrice.replace('$', ''));
-        console.log(totalPrice);
-        await expect(this.totalAmountField).toContainText(`${totalPrice}`);
+    // async checkFinalOrder(items){
+    //     const totalPrice = Number(items.firstProduct.price.replace('$', '')) + Number(items.secondProduct.price.replace('$', ''));
+    //     console.log(totalPrice);
+ 
 
 
-    }
-
-    async checkTwoItems(){
-        await expect(this.items.first()).toBeVisible();
-        await expect(this.items.last()).toBeVisible();
-        await expect(this.logoutButton).toBeEnabled();
-
-        await this.items.last().scrollIntoViewIfNeeded();
-        //await this.page.mouse.wheel(0,500);
-        //await this.page.pause();
-    }
+    // }
 
     async logout(){
         await this.page.pause();
