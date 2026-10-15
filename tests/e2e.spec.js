@@ -22,36 +22,68 @@ test('Create user, login,order 2 items, payments', async ({ page }) => {
   const myAccountPage = new MyAccountPage(page);
   const basketPage = new BasketPage(page);
 
-  await registerPage.openLoginPage();
-  await registerPage.fillRegistrationForm(newUser1);
-  await loginPage.login(newUser1.email, newUser1.password);
-  const items = await catalogPage.selectProduct();
-      await expect (catalogPage.basketCount).toContainText('2', {timeout:3000});
-  await catalogPage.gotoBasket();
 
- // Check products details
+ let items; 
+ await test.step('Open login page', async() => {
+      await registerPage.openLoginPage();
+ }) 
+
+  await test.step('Register new user', async() => {
+      await registerPage.fillRegistrationForm(newUser1);
+ }) 
+
+   await test.step('Login with created user', async() => {
+        await loginPage.login(newUser1.email, newUser1.password);
+  })
+
+  await test.step('Select two items', async() => {
+      items = await catalogPage.selectProduct();
+  }) 
+
+  await test.step('Verify basket counter(qty)', async() => {
+      await expect (catalogPage.basketCount).toContainText('2', {timeout:3000});
+  }) 
+
+  await test.step('Goto Basket', async() => {
+        await catalogPage.gotoBasket();
+  })  
+
+  await test.step('Check products details in Basket', async() => {
+// Check products details
   await expect(basketPage.firstProductItem).toHaveText(items.firstProduct.name);
   await expect(basketPage.secondProductItem).toHaveText(items.secondProduct.name);
   await expect(basketPage.firstItemPrice).toHaveText(items.firstProduct.price);
   await expect(basketPage.secondItemPrice).toHaveText(items.secondProduct.price);
+  })
 
-  // Этот метод сам внутри считает сумму, проверит её и перейдет к чекауту
-  await basketPage.checkTotalPrice();
+  await test.step('Goto Basket', async() => {
+      await basketPage.checkTotalPrice();
+  })
 
-  // Сразу переходим к заполнению платежных данных (так как checkTotalPrice уже кликнул по кнопке)
-  await checkoutPage.fillPaymentData(cardData.cardNumber, cardData.cardDate, cardData.cardCVV);
-  await expect(checkoutPage.successOrder).toBeVisible({timeout:10000});         
-  await expect(checkoutPage.page).toHaveURL('/checkout');
+  await test.step('Fill payment data and submit payment', async() => {
+      await checkoutPage.fillPaymentData(cardData.cardNumber, cardData.cardDate, cardData.cardCVV);
+  })
+
   
-  await checkoutPage.goToMyAccount();
-  await expect(checkoutPage.page).toHaveURL('/account');
+  await test.step('Verify successfull order', async() => {
+      await expect(checkoutPage.successOrder).toBeVisible({timeout:10000});         
+      await expect(checkoutPage.page).toHaveURL('/checkout');
 
-  //await myAccountPage.checkFinalOrder(items);
-  // Обратите внимание: общая сумма проверяется в BasketPage, а здесь на странице аккаунта можно проверить финал заказа
+  })
   
+  await test.step('Go to Ny account page', async() => {
+        await checkoutPage.goToMyAccount();
+        await expect(checkoutPage.page).toHaveURL('/account');
+  })
+ 
+  await test.step('Verify items list', async() => {
   await expect(myAccountPage.items.first()).toBeVisible();
   await expect(myAccountPage.items.last()).toBeVisible();
-  await expect(myAccountPage.logoutButton).toBeEnabled();
+  await expect(myAccountPage.logoutButton).toBeEnabled();  
+  })
   
-  await myAccountPage.logout();
+  await test.step('Logout button', async() => {
+      await myAccountPage.logout();
+  })
+
 })  
