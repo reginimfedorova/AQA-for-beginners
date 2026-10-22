@@ -1,0 +1,22 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://aqa-app.vercel.app",
+      "localStorage": [
+        {
+          "name": "currentUser",
+          "value": "Natasha_Friesen10@gmail.com"
+        },
+        {
+          "name": "users",
+          "value": "[{\"firstName\":\"Demo\",\"lastName\":\"Admin\",\"email\":\"admin\",\"password\":\"admin123\",\"city\":\"Kyiv\",\"country\":\"Ukraine\",\"phone\":\"+380501234567\",\"street\":\"Main Street 1\",\"zip\":\"01001\"},{\"firstName\":\"Annabell\",\"lastName\":\"Wisoky\",\"email\":\"Natasha_Friesen10@gmail.com\",\"password\":\"UvxF4Fjhmk4WXF1\",\"city\":\"Lake Nameboro\",\"country\":\"Ukraine\",\"phone\":\"+380509899148\",\"street\":\"1931 Berge Bridge\",\"zip\":\"29004\"}]"
+        },
+        {
+          "name": "isAuthenticated",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}
