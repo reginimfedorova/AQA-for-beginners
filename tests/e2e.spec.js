@@ -13,6 +13,33 @@ import {MyAccountPage} from '../page-object/MyAccount.page';
 test.setTimeout(50 * 1000);
 //test.use({viewport: {width: 1024, height: 760}});
 
+test.describe('E2E: order flow', () => {
+    test.beforeAll(async () => {
+        console.log('beforeAll: prepare test data');
+        console.log('beforeAll: Generate user');
+        console.log('beforeAll: ready');
+    });
+
+    test.beforeEach(async() => {
+        console.log('beforeEach: preconditions');
+
+    });
+
+    test.afterEach(async({page}, testInfo) =>{
+        if (testInfo.status !== testInfo.expectedStatus){
+            console.log(`afterEach: test failed: ${testInfo.title()}`);
+
+            await page.screenshot({
+                path: `test-results/${testInfo.title} - failes.png`, 
+                fullPage:true
+            })
+        };
+    });
+
+    test.afterAll(async () => {
+        console.log('AfterAll: cleanup test data');
+    });
+
 test('Create user, login,order 2 items, payments', async ({ page }) => {
   const registerPage = new RegisterPage(page);
   const a = 0;
@@ -87,3 +114,5 @@ test('Create user, login,order 2 items, payments', async ({ page }) => {
   })
 
 })  
+});
+
