@@ -6,7 +6,7 @@ import {BasketPage} from '..//page-object/Basket.page';
 import {CheckOutPage} from '../page-object/CheckOut.page';
 import {MyAccountPage} from '../page-object/MyAccount.page';
 
-test.setTimeout(50 * 1000);
+//test.Timeout(50 * 1000);
 //test.use({viewport: {width: 1024, height: 760}});
 
 test.describe('E2E: order flow', () => {

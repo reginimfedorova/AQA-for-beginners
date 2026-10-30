@@ -33,7 +33,9 @@ export default defineConfig({
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    timeout: 45 * 1000,
+    timeout: 60 * 1000,
+    actionTimeout: 10 * 1000,
+    navigationTimeout: 10 * 1000,
     headless: false,
     viewport: null, // Отключаем стандартный размер 1280x720
     launchOptions: {
